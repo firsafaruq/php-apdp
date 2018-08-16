@@ -126,9 +126,9 @@
 	<script type="text/javascript">
 		$.backstretch(
 		[
-			"./images/background1.jpg",
-			"./images/background2.jpg",
-			"./images/background3.jpg"
+			"./images/",
+			"./images/",
+			"./images/"
 		], 
 		{
 			duration: 1200, 
