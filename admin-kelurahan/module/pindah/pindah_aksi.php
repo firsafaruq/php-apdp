@@ -10,7 +10,6 @@ $tanggal_pindah = $_POST['tanggal_pindah'];
 $alamat_pindah = $_POST['alamat_pindah'];
 $id = $_POST['id'];
 
-
 // HAPUS
 if($module=='pindah' AND $aksi=='hapus' ){ 
 $mySql = "DELETE FROM pindah WHERE id_pindah='".$_GET['id_pindah']."'";

@@ -91,7 +91,7 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>APDP</b> APDP</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Aplikasi Pengolahan&nbsp;</b>Data Penduduk </span>
+          <span class="logo-lg"><b>APDP&nbsp;</b> </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -192,19 +192,19 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
 				<li><a href='?module=kk' ><i class="fa fa-institution"></i><span>Kepala Keluarga</span></a></li>
 				<li><a href='?module=kematian' ><i class="fa fa-street-view"></i><span>Kematian</span></a></li>
 				<li><a href='?module=pindah' ><i class="fa fa-book"></i><span>Pindah</span></a></li>
-				<li><a href='?module=pendatang' ><i class="fa fa-male"></i><span>Pendatang</span></a></li>
-				<li><a href='?module=kelahiran' ><i class=" fa fa-users"></i><span>Kelahiran</span></a></li>
+				<li><a href='?module=surat_keterangan'><i class="fa fa-files-o"></i><span>Surat Keterangan</span></a></li>
+			
 </ul>
-				 <li class="active treeview">
-						<a href="#"> 
-							<i class="fa fa-files-o"></i> <span>Surat Keterangan</span> <i class="fa fa-angle-left pull-right"></i>
-						</a>
-						<ul class="treeview-menu">
-							<?php include "report.php"; ?>
-							<li><a href='module/laporan/matrik_awal.php' ><i class="fa fa-print"></i><span>Cetak Surat Keterangan</span></a></li>
-						</ul>
-					</li>
-					</li>
+				 <!-- <li class="active treeview"> -->
+						<!--<a href="#"> --> 
+							<!--<i class="fa fa-files-o"></i> <span>Surat Keterangan</span> <i class="fa fa-angle-left pull-right"></i>-->
+						<!--</a> -->
+						<!--<ul class="treeview-menu"> -->
+							<!--<?php include "report.php"; ?>  -->
+							<!--<li><a href='module/laporan/matrik_awal.php' ><i class="fa fa-print"></i><span>Cetak Surat Keterangan</span></a></li>  -->
+						<!--</ul>  -->
+					<!-- </li> -->
+					<!-- </li> -->
 </ul>			
           </ul>
         </section>

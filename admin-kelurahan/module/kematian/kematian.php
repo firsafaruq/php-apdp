@@ -48,7 +48,10 @@ default:
 		<th class="col-sm-1">NO</th>
 		<th class="col-sm-1">NO. KK</th>
 		<th class="col-sm-1">NIK</th> 
-		<th class="col-sm-2">NAMA</th> 		
+		<th class="col-sm-2">NAMA</th>
+		<th class="col-sm-1">TANGGAL WAFAT</th>
+		<th class="col-sm-1">PUKUL WAFAT</th> 
+		<th class="col-sm-2">SEBAB KEMATIAN</th>
 		<th class="col-sm-1">AKSI</th> 	
 	</tr>
 </thead>
@@ -56,7 +59,7 @@ default:
 <tbody>
 <?php 
 // Tampilkan data dari Database
-$sql = "SELECT * FROM data_warga a, kematian b where a.id=b.id";
+$sql = "SELECT * FROM data_warga a, kematian b where a.id=b.id ";
 
 $tampil = mysql_query($sql);
 $no=1;
@@ -68,9 +71,11 @@ $Kode = $k['id'];?>
 	<td><?php echo $k['no_kk']; ?></td>
 	<td><?php echo $k['nik']; ?></td>
 	<td><?php echo $k['nama']; ?></td>
+	<td><?php echo $k['tanggal_wafat']; ?></td>
+	<td><?php echo $k['pukul_wafat']; ?></td>
+	<td><?php echo $k['sebab_kematian']; ?></td>
 	
 	<td align="center">
-	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Warga <?php echo $k['id'];?>" href="?module=kematian&aksi=detail_kematian&id=<?php echo $k['id'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
 	<a  class="btn btn-xs btn-info" href="?module=kematian&aksi=edit&id_kematian=<?php echo $k['id_kematian'];?>" alt="Edit Data"><i class="glyphicon glyphicon-pencil"></i></a>
 	<a class="btn btn-xs btn-warning" href="<?php echo $aksi ?>?module=kematian&aksi=hapus&id_kematian=<?php echo $k['id_kematian'];?>"  alt="Delete Data" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA <?php echo $Kode; ?>	?')"> <i class="glyphicon glyphicon-trash"></i></a>
 	</td>
@@ -83,7 +88,7 @@ $Kode = $k['id'];?>
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
 
-<!----- ------------------------- MENAMPILKAN LIST DATA KEMATIAN ------------------------- ----->
+<!----- ------------------------- END MENAMPILKAN DATA KEMATIAN ------------------------- ----->
 <?php 
 break;
 case "list_kematian": 
@@ -141,12 +146,14 @@ case "tambah":
 ?>
 <!----- ------------------------- TAMBAH DATA MASTER kematian ------------------------- ----->
 <?php
-$hasil = mysql_query("SELECT max(id_kematian) as terakhir from kematian"); 
-$data = mysql_fetch_array($hasil);
-  $lastID = $data['terakhir']; 
-  $lastNoUrut = substr($lastID,13, 20); 
-  $nextNoUrut = $lastNoUrut + 1;
-  $nextID = "IDK".sprintf("%03s",$nextNoUrut);
+$sql6 ="SELECT max(id_kematian) as terakhir from kematian";
+  $hasil6 = mysql_query($sql6);
+  $data6 = mysql_fetch_array($hasil6);
+  $lastID6 = $data6['terakhir'];
+  $lastNoUrut6 = substr($lastID6, 3, 9);
+  $nextNoUrut6 = $lastNoUrut6 + 1;
+  $nextID6 = "IDK".sprintf("%03s",$nextNoUrut6);
+  $id_kematian=$nextID6;
 ?>
 <h3 class="box-title margin text-center">Tambah Data kematian Warga</h3>
 <hr/>
@@ -165,7 +172,7 @@ $data = mysql_fetch_array($hasil);
   <div class="form-group">
     <label class="col-sm-4 control-label">ID KEMATIAN</label>
     <div class="col-sm-5">
-    <input type="text" class="form-control" required="required" name="id_kematian" value="<?php echo $nextID;?>">
+    <input type="text" class="form-control" required="required" name="id_kematian" value="<?php echo $nextID6;?>">
     </div>
   </div>
   <div class="form-group">

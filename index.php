@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Aplikasi Pengolahan Data Penduduk</title>
+    <title>Sistem Informasi Kependudukan</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="aset/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -47,7 +47,7 @@
     <div class="login-box gradient">
       <div class="login-logo">
 <div class="login-logo">
-       <img src="images/kota tasik.png"> </div>
+       <img src="images/kota tasik.png" align="center"> <br><b><h2><font color="blue">APLIKASI PENGOLAHAN DATA PENDUDUK </font></h2></b> </div>
 	   
       
       </div><!-- /.login-logo -->
@@ -126,9 +126,9 @@
 	<script type="text/javascript">
 		$.backstretch(
 		[
-			"./images/",
-			"./images/",
-			"./images/"
+			"./images/apdp.jpg",
+			"./images/background2.jpg",
+			"./images/background3.jpg"
 		], 
 		{
 			duration: 1200, 

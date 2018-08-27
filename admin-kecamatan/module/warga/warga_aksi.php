@@ -1,4 +1,5 @@
 <?php
+
 include "../../koneksi.php";
 
 $module=$_GET['module'];
@@ -25,14 +26,34 @@ $desa = $_POST['desa'];
 $rt = $_POST['rt'];
 $rw = $_POST['rw'];
 
+$tempat_dilahirkan = $_POST['tempat_dilahirkan'];
+$id_kelahiran= $_POST['id'];
+$pukul_lahir = $_POST['pukul_lahir'];
+$jenis_kelahiran = $_POST['jenis_kelahiran'];
+$kelahiran_ke = $_POST['kelahiran_ke'];
+$penolong = $_POST['penolong'];
+
+
+
+
 // HAPUS
 if($module=='warga' AND $aksi=='hapus' ){ 
 $mySql = "DELETE FROM data_warga WHERE id='".$_GET['id']."'";
+$mySql1 = mysql_query("DELETE FROM kematian WHERE id='".$_GET['id']."'");
+$mySql2 = mysql_query("DELETE FROM pindah WHERE id='".$_GET['id']."'");
+$mySql3 = mysql_query("DELETE FROM kelahiran WHERE id='".$_GET['id']."'");
+$mySql4 = mysql_query("DELETE FROM pendatang WHERE id='".$_GET['id']."'");
+
 $myQry = mysql_query($mySql);
 header('location:../../index.php?module='.$module);
 }
 // EDIT
 else if($module=='warga' AND $aksi=='edit' ){ 
+
+$penolong = $_POST['penolong'];
+$nama_penolong = $_POST['nama_penolong'];
+$berat_bayi = $_POST['berat_bayi'];
+$panjang_bayi = $_POST['panjang_bayi'];
 $query = mysql_query("UPDATE data_warga SET
 				  no_kk = '$no_kk',
 				  nik = '$nik',
@@ -54,23 +75,56 @@ $query = mysql_query("UPDATE data_warga SET
 				  rt = '$rt',
 				  rw = '$rw'
 				  WHERE id = '$id'");
+				  
+		  
+				  $query2 = mysql_query("UPDATE kelahiran SET				  
+				  id_kelahiran = '$id_kelahiran',
+				  tempat_dilahirkan = '$tempat_dilahirkan',
+				  pukul_lahir = '$pukul_lahir',
+				  jenis_kelahiran = '$jenis_kelahiran',
+				  penolong = '$penolong',
+				  nama_penolong = '$nama_penolong',
+				  berat_bayi = '$berat_bayi',
+				  panjang_bayi  = '$panjang_bayi',
+				  kelahiran_ke = '$kelahiran_ke'
+				  WHERE id = '$id'");		  
+				  
+				  
+$id_pendatang = $_POST['id_pendatang'];
+$tanggal_datang = $_POST['tanggal_datang'];
+$alamat_datang = $_POST['alamat_datang'];
+				 $query3 = mysql_query("UPDATE pendatang SET				  
+				  id_pendatang = '$id_pendatang',
+				  tanggal_datang  = '$tanggal_datang',
+				  alamat_datang = '$alamat_datang'
+				  WHERE id = '$id'");
+				  
 header('location:../../index.php?module='.$module);
 
 }
+
 //Tambah
 else if($module=='warga' AND $aksi=='tambah' ){ 
 	header('location:../../index.php?module='.$module);
 $sql = "INSERT INTO data_warga  (id, no_kk, nik, nama, jk, tempat_lhr, tanggal_lhr, kewarganegaraan, agama, pendidikan, pekerjaan, status_nikah, status_keluarga, gol_dar, nama_ayah, nama_ibu, alamat, desa, rt, rw ) VALUES ('$id', '$no_kk', '$nik', '$nama', '$jk', '$tempat_lhr', '$tanggal_lhr', '$kewarganegaraan', '$agama', '$pendidikan', '$pekerjaan', '$status_nikah', '$status_keluarga', '$gol_dar', '$nama_ayah', '$nama_ibu', '$alamat', '$desa', '$rt', '$rw')";
 $simpan = mysql_query($sql);
+
+
+$id_kelahiran = $_POST['id_kelahiran'];
+$penolong = $_POST['penolong'];
+$nama_penolong = $_POST['nama_penolong'];
+$berat_bayi = $_POST['berat_bayi'];
+$panjang_bayi = $_POST['panjang_bayi'];
+$sql1 = "INSERT INTO kelahiran (id_kelahiran, tempat_dilahirkan, pukul_lahir, jenis_kelahiran, kelahiran_ke, penolong, nama_penolong, berat_bayi, panjang_bayi, id) VALUES ('$id_kelahiran', '$tempat_dilahirkan','$pukul_lahir', '$jenis_kelahiran', '$kelahiran_ke', '$penolong', '$nama_penolong', '$berat_bayi', '$panjang_bayi', '$id')";
+$simpa = mysql_query($sql1);
+
+$id_pendatang = $_POST['id_pendatang'];
+$tanggal_datang = $_POST['tanggal_datang'];
+$alamat_datang = $_POST['alamat_datang'];
+$sql2 = "INSERT INTO pendatang (id_pendatang, tanggal_datang, alamat_datang, id) VALUES ('$id_pendatang', '$tanggal_datang', '$alamat_datang', '$id')";
+$simpan2 = mysql_query($sql2);
+
 }
-else if($module=='user' AND $aksi=='edit' ){ 
-mysql_query("UPDATE user SET 
-nama='$nama',
-no_hp='$no_hp',
-level='$level',
-user='$user',
-pass='$pass'
-WHERE id_user = '$id'");
-header('location:../../index.php?module='.$module);
-}
+
+
 ?>

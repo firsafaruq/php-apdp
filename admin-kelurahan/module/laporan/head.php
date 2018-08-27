@@ -7,7 +7,6 @@ include "inc/inc.library.php";
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>SISTEM INFORMASI KEPENDUDUKAN KECAMATAN TAWANG KOTA TASIKMALAYA</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="../../../aset//dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap 3.3.4 -->

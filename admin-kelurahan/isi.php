@@ -22,6 +22,9 @@ else if ($_GET['module'] == "pendatang") {
 else if ($_GET['module'] == "kelahiran") {
 	include "module/kelahiran/kelahiran.php";
 }
+else if ($_GET['module'] == "surat_keterangan") {
+	include "module/surat_keterangan/surat_keterangan.php";
+}
 else if ($_GET['module'] == "user") {
 	include "module/user/user.php";	
 }

@@ -163,7 +163,7 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
 				<a href="index.php?module=edit_user&id_user=<?php echo $_SESSION['id'];?>" class="btn btn-xs btn-danger ">&nbsp;<i class="fa fa-user"></i>&nbsp;</a> 
 				&nbsp;&nbsp;
 			
-				<a href="../logout.php" class="btn btn-xs btn-primary ">&nbsp;<i class="fa fa-power-off"></i>&nbsp;</a>&nbsp;&nbsp;
+				<a href="../logout.php" class="btn btn-xs btn-success ">&nbsp;<i class="fa fa-power-off"></i>&nbsp;</a>&nbsp;&nbsp;
 			</td>
 			</tr>
 			</tr>
@@ -192,19 +192,19 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
 				<li><a href='?module=kk' ><i class="fa fa-institution"></i><span>Kepala Keluarga</span></a></li>
 				<li><a href='?module=kematian' ><i class="fa fa-street-view"></i><span>Kematian</span></a></li>
 				<li><a href='?module=pindah' ><i class="fa fa-book"></i><span>Pindah</span></a></li>
-				<li><a href='?module=pendatang' ><i class="fa fa-male"></i><span>Pendatang</span></a></li>
-				<li><a href='?module=kelahiran' ><i class=" fa fa-users"></i><span>Kelahiran</span></a></li>
+				<li><a href='?module=surat_keterangan'><i class="fa fa-files-o"></i><span>Surat Keterangan</span></a></li>
+			
 </ul>
-				 <li class="active treeview">
-						<a href="#"> 
-							<i class="fa fa-files-o"></i> <span>Surat Keterangan</span> <i class="fa fa-angle-left pull-right"></i>
-						</a>
-						<ul class="treeview-menu">
-							<?php include "report.php"; ?>
-							<li><a href='module/laporan/matrik_awal.php' ><i class="fa fa-print"></i><span>Cetak Surat Keterangan</span></a></li>
-						</ul>
-					</li>
-					</li>
+				 <!-- <li class="active treeview"> -->
+						<!--<a href="#"> --> 
+							<!--<i class="fa fa-files-o"></i> <span>Surat Keterangan</span> <i class="fa fa-angle-left pull-right"></i>-->
+						<!--</a> -->
+						<!--<ul class="treeview-menu"> -->
+							<!--<?php include "report.php"; ?>  -->
+							<!--<li><a href='module/laporan/matrik_awal.php' ><i class="fa fa-print"></i><span>Cetak Surat Keterangan</span></a></li>  -->
+						<!--</ul>  -->
+					<!-- </li> -->
+					<!-- </li> -->
 </ul>			
           </ul>
         </section>
@@ -330,11 +330,11 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
             <a href="javascript:void(0)">
               <h4 class="control-sidebar-subheading">
                 Update Resume
-                <span class="label label-primary pull-right">95%</span>
+                <span class="label label-info pull-right">95%</span>
               </h4>
 
               <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 95%"></div>
+                <div class="progress-bar progress-bar-info" style="width: 95%"></div>
               </div>
             </a>
           </li>

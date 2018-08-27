@@ -6,7 +6,7 @@ switch($_GET[aksi]){
 default:
 ?>
 <!----- ------------------------- MENAMPILKAN DATA PINDAH ------------------------- ----->			
-<div style="margin-right:10%;margin-left:15%" class="alert alert-success alert-dismissable">
+<div style="margin-right:10%;margin-left:15%" class="alert alert-info alert-dismissable">
 <button type="button" class="btn btn-primary close" data-dismiss="alert" aria-hidden="true">&nbsp;<i class="fa fa-close "></i>&nbsp;</button>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,16 +30,15 @@ default:
 </div><!-- /.input group -->
 </div>
 <div class="col-sm-1">
-<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
+<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-info"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
 </div></div>  
 </form>
-	<div class="box box-solid box-primary">
+	<div class="box box-solid box-info">
 		<div class="box-header">
 		<h3 class="btn btn disabled box-title">
 		<i class="glyphicon glyphicon-thumbs-up"></i>
 		Data Pindah Warga </h3>
-		<a class="btn btn-default pull-right" href="?module=pindah&aksi=list_pindah">
-		<i class="fa  fa-plus"></i> Tambah Data Pindah Warga </a>	
+			
 		</div>		
 	<div class="box-body">
 	<table id="example1" class="table table-bordered table-striped">
@@ -48,8 +47,10 @@ default:
 		<th class="col-sm-1">NO</th>
 		<th class="col-sm-1">NO. KK</th>
 		<th class="col-sm-1">NIK</th> 
-		<th class="col-sm-2">NAMA</th>		
-		<th class="col-sm-1">AKSI</th> 	
+		<th class="col-sm-2">NAMA</th>	
+		<th class="col-sm-2">TANGGAL PINDAH</th>	
+		<th class="col-sm-2">ALAMAT PINDAH</th>	
+		
 	</tr>
 </thead>
 
@@ -68,9 +69,11 @@ $Kode = $k['id'];?>
 	<td><?php echo $k['no_kk']; ?></td>
 	<td><?php echo $k['nik']; ?></td>
 	<td><?php echo $k['nama']; ?></td>
-	
+	<td><?php echo $k['tanggal_pindah']; ?></td>
+	<td><?php echo $k['alamat_pindah']; ?></td>
 	<td align="center">
-	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Pindah <?php echo $k['id_pindah'];?>" href="?module=pindah&aksi=detail_pindah&id_pindah=<?php echo $k['id_pindah'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
+	
+	
 	</td>
 	<?php
 	}
@@ -94,9 +97,7 @@ case "list_pindah":
 		<div class="box-header">
 		<h3 class="btn btn disabled box-title">
 		<i class="fa fa-book"></i>
-		Data Pindah  </h3>
-		<a class="btn btn-default pull-right"href="?module=pindah&aksi=tambah">
-		<i class="fa  fa-plus"></i> Tambah Data Pindah Warga</a>		
+		Data Pindah  </h3>		
 		</div>			
 	<div class="box-body">
 	<table id="example1" class="table table-bordered table-striped">
@@ -142,13 +143,15 @@ case "tambah":
 ?>
 <!----- ------------------------- TAMBAH DATA PINDAH WARGA ------------------------- ----->
 <?php
-$hasil = mysql_query("SELECT max(id_pindah) as terakhir from pindah"); 
-	$data = mysql_fetch_array($hasil);
-	$lastID = $data['terakhir']; 
-	$lastNoUrut = substr($lastID,13, 20); 
-	$nextNoUrut = $lastNoUrut + 1;
-	$nextID = "IDPIN".sprintf("%03s",$nextNoUrut);
-?>
+$sql6 ="SELECT max(id_pindah) as terakhir from pindah";
+  $hasil6 = mysql_query($sql6);
+  $data6 = mysql_fetch_array($hasil6);
+  $lastID6 = $data6['terakhir'];
+  $lastNoUrut6 = substr($lastID6, 3, 9);
+  $nextNoUrut6 = $lastNoUrut6 + 1;
+  $nextID6 = "IDP".sprintf("%03s",$nextNoUrut6);
+  $id_pindah=$nextID6;
+ ?>
 <h3 class="box-title margin text-center">Tambah Data Pindah Warga</h3>
 <hr/>
 	<div class="box-body">
@@ -166,7 +169,7 @@ $hasil = mysql_query("SELECT max(id_pindah) as terakhir from pindah");
   <div class="form-group">
     <label class="col-sm-4 control-label">ID PINDAH</label>
     <div class="col-sm-5">
-    <input type="text" class="form-control" required="required" name="id_pindah" value="<?php echo $nextID;?>">
+    <input type="text" class="form-control" required="required" name="id_pindah" value="<?php echo $nextID6;?>">
     </div>
   </div>
   <div class="form-group">
@@ -276,13 +279,15 @@ $edit=mysql_fetch_array($data);
       <input type="text" class="form-control" value="<?php echo $s['nama'];?>">
     </div>
   </div>
-<div class="form-group">
-     <label class="col-sm-4 control-label">ALAMAT PINDAH</label>
-	 <div class="col-sm-5">
- <input type="text" class="form-control" required="required" value="<?php echo $edit['alamat_pindah'];?>" name="alamat_pindah">
-	</div>
-  </div>  
-
+ <div class="form-group">
+    <label class="col-sm-4 control-label">JK</label>
+    <div class="col-sm-5">
+	<?php 
+	
+	?>
+      <input type="text" class="form-control" value="<?php echo $s['nama'];?>">
+    </div>
+  </div>
 <div class="form-group">
     <label class="col-sm-4"></label>
     <div class="col-sm-5">
@@ -300,11 +305,11 @@ $edit=mysql_fetch_array($data);
 <?php	
 break;
 case "detail_pindah" :
-$data=mysql_query("SELECT * FROM data_warga a, pindah b where a.id=b.id");
+$data=mysql_query("SELECT * FROM pindah WHERE id_pindah='$_GET[id_pindah]'");
 $edit=mysql_fetch_array($data);
 ?>
 <!----- ------------------------- LIHAT DATA PINDAH ------------------------- ----->
-<h3 class="box-title margin text-center">Detail Pindah Warga "<?php echo $_GET['id']; ?>"</h3>
+<h3 class="box-title margin text-center">Detail Pindah Warga "<?php echo $_GET['id_pindah']; ?>"</h3>
 <hr/>
 	 	
 <form class="form-horizontal" action="<?php echo $aksi?>?module=pindah&aksi=edit" role="form" method="post">             
@@ -317,126 +322,6 @@ $edit=mysql_fetch_array($data);
 	<i class="fa fa-minus"></i></a>
 		</div>	
 	<div class="box-body">
-	
- <div class="form-group">
-    <label class="col-sm-4 control-label">NO</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" readonly name="id" value="<?php echo $edit['id']; ?>" >
-    </div>
-  </div> 
-    <div class="form-group">
-    <label class="col-sm-4 control-label">NO. KK</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['no_kk']; ?>" readonly name="no_kk" placeholder="Masukan No KK ...">
-    </div>
-  </div>
-   <div class="form-group">
-    <label class="col-sm-4 control-label">NIK</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nik']; ?>" readonly name="nik" placeholder="Masukan NIK ...">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama']; ?>" readonly name="nama" placeholder="Masukan Nama Lengkap">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">JENIS KELAMIN</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['jk']; ?>" readonly name="nama" placeholder="Jenis Kelamin">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['tempat_lhr']; ?>" readonly name="tempat_lhr" placeholder="Tempat Lahir">
-    </div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
-	 <div class="col-sm-5">
-    <input type="date" class="form-control" value="<?php echo $edit['tanggal_lhr']; ?>" placeholder="Masukan tanggal lahir" readonly name="tanggal_lhr">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">KEWARGANEGARAAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['kewarganegaraan']; ?>" placeholder="kewarganegaraan" readonly name="kewarganegaraan">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">AGAMA</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['agama']; ?>" placeholder="Agama" readonly name="agama">
-	</div>
-  </div>
-   <div class="form-group">
-     <label class="col-sm-4 control-label">PENDIDIKAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['pendidikan']; ?>" placeholder="Pendidikan" readonly name="pendidikan">
-	</div>
-  </div>
-   <div class="form-group">
-     <label class="col-sm-4 control-label">PEKERJAAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['pekerjaan']; ?>" placeholder="Pekerjaan" readonly name="pekerjaan">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">STATUS PERNIKAHAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['status_nikah']; ?>" placeholder="Status Nikah" readonly name="status_nikah">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">STATUS KELUARGA</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['status_keluarga']; ?>" placeholder="Status Keluarga" readonly name="status_keluarga">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">Golongan Darah</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['gol_dar']; ?>" placeholder="Golongan Darah" readonly name="gol_dar">
-	</div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA AYAH</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ayah']; ?>" readonly name="nama_ayah" placeholder="Nama Ayah">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA IBU</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ibu']; ?>" readonly name="nama_ibu" placeholder="Nama Ibu">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">ALAMAT ASAL</label>
-    <div class="col-sm-5">
-      <input rowspan="2" class="form-control" value="<?php echo $edit['alamat']; ?>" readonly name="alamat" placeholder="Alamat">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">DESA</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['desa']; ?>" readonly name="desa" placeholder="Desa">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">RT</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['rt']; ?>" readonly name="rt" placeholder="RT">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">RW</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['rw']; ?>" readonly name="rw" placeholder="RW">
-    </div>
  <div class="form-group">
     <label class="col-sm-4 control-label">ID PINDAH / TANGGAL PINDAH</label>
     <div class="col-sm-3">
@@ -450,6 +335,15 @@ $edit=mysql_fetch_array($data);
       <input type="date" class="form-control" required="required" value="<?php echo $edit['tanggal_pindah'];?>" readonly name="tanggal_pindah">
 	</div><!-- /.input group -->
 	</div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-4 control-label">NAMA</label>
+    <div class="col-sm-5">
+	<?php 
+	$s=mysql_fetch_array(mysql_query("SELECT nama FROM data_warga WHERE id='$edit[id]'"));
+	?>
+      <input type="text" class="form-control" disabled value="<?php echo $s['nama'];?>">
+    </div>
   </div>
 <div class="form-group">
      <label class="col-sm-4 control-label">ALAMAT PINDAH</label>

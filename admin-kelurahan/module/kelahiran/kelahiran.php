@@ -1,9 +1,10 @@
 <?php
 $aksi="module/kelahiran/kelahiran_aksi.php";
+
+
 switch($_GET[aksi]){
 default:
 ?>
-
 <!----- ------------------------- MENAMPILKAN DATA KELAHIRAN ------------------------- ----->			
 <div style="margin-right:10%;margin-left:15%" class="alert alert-success alert-dismissable">
 <button type="button" class="btn btn-primary close" data-dismiss="alert" aria-hidden="true">&nbsp;<i class="fa fa-close "></i>&nbsp;</button>
@@ -54,41 +55,45 @@ default:
 		<th class="col-sm-1">AKSI</th> 	
 	</tr>
 </thead>
-<tbody>
 
-<!-- TAMPILKAN DATA DARI DATABASE -->
+<tbody>
 <?php 
-$sql = "SELECT * FROM data_warga a, kelahiran b where a.id=b.id";
+// Tampilkan data dari Database
+$sql = "SELECT * FROM kelahiran ";
+
 $tampil = mysql_query($sql);
 $no=1;
 while ($k = mysql_fetch_array($tampil)) { 
 $Kode = $k['id'];?>
-<tr>	
+
+	<tr>	
 	<td><?php echo $no++; ?></td> 
 	<td><?php echo $k['no_kk']; ?></td>
 	<td><?php echo $k['nik']; ?></td>
 	<td><?php echo $k['nama']; ?></td>
-	<td><?php echo $k['nama_ibu']; ?></td>
-	<td><?php echo $k['nama_ayah']; ?></td>
+	<td><?php echo $k['ibu']; ?></td>
+	<td><?php echo $k['ayah']; ?></td>
 	<td><?php echo $k['alamat']; ?></td>
+	
 	<td align="center">
 	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Pindah <?php echo $k['id_kelahiran'];?>" href="?module=kelahiran&aksi=detail_kelahiran&id_kelahiran=<?php echo $k['id_kelahiran'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
 	<a  class="btn btn-xs btn-info" href="?module=kelahiran&aksi=edit&id_kelahiran=<?php echo $k['id_kelahiran'];?>" alt="Edit Data"><i class="glyphicon glyphicon-pencil"></i></a>
 	<a class="btn btn-xs btn-warning" href="<?php echo $aksi ?>?module=kelahiran&aksi=hapus&id_kelahiran=<?php echo $k['id_kelahiran'];?>"  alt="Delete Data" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA <?php echo $Kode; ?>	?')"> <i class="glyphicon glyphicon-trash"></i></a>
 	</td>
-<?php
+	<?php
 	}
-?>
-</tr>
-</tbody>
-</table>
-</div><!-- /.box-body -->
+	?>
+	</tr>
+			</tbody>
+		</table>
+	</div><!-- /.box-body -->
 </div><!-- /.box -->
 
-<!----- ------------------------- PEMANGGILAN TAMBAH DATA KELAHIRAN ------------------------- ----->
+<!----- ------------------------- END MENAMPILKAN DATA KELAHIRAN ------------------------- ----->
 <?php 
 break;
-case "tambah":  
+ case "tambah": 
+ 
 $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
   $hasil = mysql_query($sql);
   $data = mysql_fetch_array($hasil);
@@ -97,7 +102,7 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
   $nextNoUrut = $lastNoUrut + 1;
   $nextID = "IDL".sprintf("%03s",$nextNoUrut);
 ?>
-<!----- ------------------------- FORM TAMBAH DATA KELAHIRAN ------------------------- ----->
+<!----- ------------------------- TAMBAH DATA KELAHIRAN ------------------------- ----->
 <h3 class="box-title margin text-center">Tambah Data Kelahiran</h3>
 <hr/>
 	<div class="box-body">
@@ -110,8 +115,6 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
 		</div>	
 	<div class="box-body">
 <form class="form-horizontal" action="<?php echo $aksi?>?module=kelahiran&aksi=tambah" role="form" method="post">        
-
-<!-- otomatisasi id kelahiran -->
 <?php
 $sql6 ="SELECT max(id) as terakhir from kelahiran";
   $hasil6 = mysql_query($sql6);
@@ -122,32 +125,31 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
   $nextID6 = "IDL".sprintf("%03s",$nextNoUrut6);
   $id_himpunan=$nextID6;
 ?>
-
-<div class="form-group">
+  <div class="form-group">
     <label class="col-sm-4 control-label">ID KELAHIRAN</label>
     <div class="col-sm-5">
-    <input type="text" class="form-control" required="required" name="id_kelahiran" value="<?php echo $nextID6;?>">
+    <input type="text" class="form-control" required="required" name="id_kelahiran" value="<?php echo $nextID;?>">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">ID WARGA</label>
     <div class="col-sm-5">
     <input type="text" class="form-control" required="required" name="id" value="<?php echo $nextID;?>">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">NO KK</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" required="required" name="no_kk" placeholder="Masukan No kk ...">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">NAMA</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" required="required" name="nama" placeholder="Masukan Nama Lengkap ...">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">JENIS KELAMIN</label>
     <label class="radio-inline">
     <input type="radio" name="jk" value="Laki - laki" checked>Laki - laki
@@ -155,8 +157,9 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
     <label class="radio-inline">
     <input type="radio" name="jk" value="Perempuan">Perempuan
     </label>
-</div>
-<div class="form-group">
+  </div>
+  
+  <div class="form-group">
                                             <label class="col-sm-4 control-label">TEMPAT DILAHIRKAN</label>
 											<div class="col-sm-5">
                                             <select class="form-control" name="tempat_dilahirkan">
@@ -168,32 +171,32 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
                                                 <option>Lainnya</option>
                                             </select>
 											</div>
-</div>
-<div class="form-group">
+   </div>
+   <div class="form-group">
     <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="tempat_lhr" placeholder="Tempat Lahir"></textarea>
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
      <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
 	 <div class="col-sm-5">
     <input type="date" class="form-control" placeholder="Masukan tanggal lahir" name="tanggal_lhr">
 	</div>
-</div>
-<div class="form-group">
+  </div>
+   <div class="form-group">
      <label class="col-sm-4 control-label">PUKUL LAHIR</label>
 	 <div class="col-sm-5">
 	 <input type="time" class="form-control" required="required" value="<?php echo date("hh-mm-ss"); ?>" name="pukul_lahir" placeholder="Pukul Lahir">
 	</div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">KELAHIRAN KE</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="kelahiran_ke"placeholder="Kelahiran ke"></textarea>
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
                                             <label class="col-sm-4 control-label">JENIS KELAHIRAN</label>
 											<div class="col-sm-5">
                                             <select class="form-control" name="jenis_kelahiran">
@@ -204,8 +207,8 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
                                                 <option>Lainnya</option>
                                             </select>
 											</div>
-</div>
-<div class="form-group">
+   </div>
+  <div class="form-group">
                                             <label class="col-sm-4 control-label">PENOLONG KELAHIRAN</label>
 											<div class="col-sm-5">
                                             <select class="form-control" name="penolong">
@@ -216,26 +219,28 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
                                                 <option>Lainnya</option>
                                             </select>
 											</div>
-</div>
-<div class="form-group">
+   </div>
+    <div class="form-group">
     <label class="col-sm-4 control-label">NAMA PENOLONG</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="nama_penolong"placeholder="Nama Penolong"></textarea>
     </div>
-</div> 
-<div class="form-group">
+  </div>
+  
+ 
+  <div class="form-group">
     <label class="col-sm-4 control-label">BERAT BAYI</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="berat_bayi"placeholder="Berat Bayi"></textarea>
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">PANJANG BAYI</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="panjang_bayi"placeholder="Panjang Bayi"></textarea>
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
                                             <label class="col-sm-4 control-label">GOLONGAN DARAH</label>
 											<div class="col-sm-5">
                                             <select class="form-control" name="gol_dar">
@@ -247,8 +252,8 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
                                                 <option>Lainnya</option> 
                                             </select>
                                         </div>
-</div>
-<div class="form-group">
+										</div>
+ <div class="form-group">
 	  <label class="col-sm-4 control-label">KEWARGANEGARAAN</label>
 	  <label class="radio-inline">
 	  <input type="radio" name="kewarganegaraan" value="WNI" checked>WNI
@@ -256,8 +261,9 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
 	  <label class="radio-inline">
 	  <input type="radio" name="kewarganegaraan" value="WNA">WNA
 		</label>
-</div>  
-<div class="form-group">
+  </div>
+  
+  <div class="form-group">
                                             <label class="col-sm-4 control-label">AGAMA</label>
 											<div class="col-sm-5">
                                             <select class="form-control" name="agama">
@@ -270,43 +276,44 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
                                                 <option>Lainnya</option>
                                             </select>
 											</div>
-</div>  
-<div class="form-group">
+   </div>
+  
+  <div class="form-group">
     <label class="col-sm-4 control-label">AYAH</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="ayah" placeholder="Nama Ayah">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">IBU</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="ibu" placeholder="Nama Ibu">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">ALAMAT</label>
     <div class="col-sm-5">
       <textarea rowspan="2" class="form-control" name="alamat" placeholder="Alamat"></textarea>
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">DESA</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="desa" placeholder="Desa">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">RT</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="rt" placeholder="RT">
     </div>
-</div>
-<div class="form-group">
+  </div>
+  <div class="form-group">
     <label class="col-sm-4 control-label">RW</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="rw" placeholder="RW">
     </div>
-</div>
+  </div>
 <div class="form-group">
     <label class="col-sm-4"></label>
     <div class="col-sm-5">
@@ -315,26 +322,28 @@ $sql6 ="SELECT max(id) as terakhir from kelahiran";
 <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> RESET</button>
 <a href="javascript:history.back()" class="btn btn-info pull-right"><i class="fa fa-backward"></i> KEMBALI</a>			 
     </div>
-</div> 
+  </div> 
 </form>
 </div> 
 </div> 
 </div> 
 </form>
 </div> </div> 
-
-<!----- ------------------------- PEMANGGILAN EDIT DATA KELAHIRAN ------------------------- ----->
+<!----- ------------------------- END TAMBAH DATA KELAHIRAN ------------------------- ----->
 <?php	
 break;
 case "edit" :
-$data=mysql_query("SELECT * FROM data_warga a, kelahiran b where a.id=b.id");
-$edit=mysql_fetch_array($data);
-?>
 
-<!----- ------------------------- FORM EDIT DATA KELAHIRAN ------------------------- ----->
-<h3 class="box-title margin text-center">Edit Data Kelahiran "<?php echo $_GET['id']; ?>"</h3>
+$data=mysql_query("SELECT * FROM kelahiran WHERE id_kelahiran='$_GET[id_kelahiran]'");
+$edit=mysql_fetch_array($data);
+
+?>
+<!----- ------------------------- EDIT DATA KELAHIRAN ------------------------- ----->
+<h3 class="box-title margin text-center">Edit Data Kelahiran "<?php echo $_GET['id_kelahiran']; ?>"</h3>
 <hr/>
+	 	
 <form class="form-horizontal" action="<?php echo $aksi?>?module=kelahiran&aksi=edit" role="form" method="post">             
+
 <div class="box box-solid box-danger">
 <div class="box-header">
 <h3 class="btn btn disabled box-title">
@@ -413,13 +422,13 @@ $edit=mysql_fetch_array($data);
 <div class="form-group">
   <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
     <div class="col-sm-5">
-      <input type="text" rowspan="2" class="form-control" value="<?php echo $edit['tempat_lhr']; ?>" name="tempat_lahir" placeholder="Tempat Lahir">
+      <input type="text" rowspan="2" class="form-control" value="<?php echo $edit['tempat_lahir']; ?>" name="tempat_lahir" placeholder="Tempat Lahir">
     </div>
 </div>
 <div class="form-group">
      <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
 	 <div class="col-sm-5">
-   <input type="date" class="form-control" value="<?php echo $edit['tanggal_lhr']; ?>" placeholder="Masukan tanggal lahir" name="tanggal_lahir">
+   <input type="date" class="form-control" value="<?php echo $edit['tanggal_lahir']; ?>" placeholder="Masukan tanggal lahir" name="tanggal_lahir">
 	</div>
 </div>
 <div class="form-group">
@@ -483,13 +492,13 @@ $edit=mysql_fetch_array($data);
 <div class="form-group">
     <label class="col-sm-4 control-label">NAMA AYAH</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ayah']; ?>" name="nama_ayah" placeholder="Nama Ayah">
+      <input type="text" class="form-control" value="<?php echo $edit['ayah']; ?>" name="nama_ayah" placeholder="Nama Ayah">
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-4 control-label">NAMA IBU</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ibu']; ?>" name="nama_ibu" placeholder="Nama Ibu">
+      <input type="text" class="form-control" value="<?php echo $edit['ibu']; ?>" name="nama_ibu" placeholder="Nama Ibu">
     </div>
 </div>
 <div class="form-group">
@@ -512,22 +521,23 @@ $edit=mysql_fetch_array($data);
 </form>
 </div>
 </div>
-
-<!----- ------------------------- PEMANGGILAN LIHAT DATA KELAHIRAN ------------------------- ----->
+<!----- ------------------------- END EDIT DATA MASTER kematian ------------------------- ----->
 <?php	
 break;
 case "detail_kelahiran" :
-$data=mysql_query("SELECT * FROM data_warga a, kelahiran b where a.id=b.id");
+$data=mysql_query("SELECT * FROM kelahiran WHERE id_kelahiran='$_GET[id_kelahiran]'");
 $edit=mysql_fetch_array($data);
 ?>
-<!----- ------------------------- FORM LIHAT DATA KELAHIRAN ------------------------- ----->
-<h3 class="box-title margin text-center">Lihat Data Kelahiran "<?php echo $_GET['id']; ?>"</h3>
-<hr/> 	
+<!----- ------------------------- DETAIL DATA KELAHIRAN ------------------------- ----->
+<h3 class="box-title margin text-center">Detail Data Kelahiran "<?php echo $_GET['id_kelahiran']; ?>"</h3>
+<hr/>
+	 	
 <form class="form-horizontal" action="<?php echo $aksi?>?module=kelahiran&aksi=edit" role="form" method="post">             
+
 <div class="box box-solid box-danger">
 <div class="box-header">
 <h3 class="btn btn disabled box-title">
-<i class="glyphicon glyphicon-thumbs-up"></i> Lihat Informasi Data Kelahiran </h3>
+<i class="glyphicon glyphicon-thumbs-up"></i> Detail Informasi Data Kelahiran </h3>
 	<a class="btn btn-default btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
 	<i class="fa fa-minus"></i></a>
 		</div>	
@@ -535,7 +545,7 @@ $edit=mysql_fetch_array($data);
 <div class="form-group">
     <label class="col-sm-4 control-label">ID KELAHIRAN</label>
     <div class="col-sm-3">
-      <input type="text" class="form-control" readonly name="id_kelahiran" value="<?php echo $edit['id_kelahiran'];?>">	  
+      <input type="text" class="form-control" readonly name="id_pendatang" value="<?php echo $edit['id_kelahiran'];?>">	  
     </div>
 	</div>
 <div class="form-group">
@@ -602,13 +612,13 @@ $edit=mysql_fetch_array($data);
 <div class="form-group">
   <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
     <div class="col-sm-5">
-      <input type="text" rowspan="2" class="form-control" value="<?php echo $edit['tempat_lhr']; ?>" readonly name="tempat_lahir" placeholder="Tempat Lahir">
+      <input type="text" rowspan="2" class="form-control" value="<?php echo $edit['tempat_lahir']; ?>" readonly name="tempat_lahir" placeholder="Tempat Lahir">
     </div>
 </div>
 <div class="form-group">
      <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
 	 <div class="col-sm-5">
-   <input type="date" class="form-control" value="<?php echo $edit['tanggal_lhr']; ?>" placeholder="Masukan tanggal lahir" readonly name="tanggal_lahir">
+   <input type="date" class="form-control" value="<?php echo $edit['tanggal_lahir']; ?>" placeholder="Masukan tanggal lahir" readonly name="tanggal_lahir">
 	</div>
 </div>
 <div class="form-group">
@@ -672,13 +682,13 @@ $edit=mysql_fetch_array($data);
 <div class="form-group">
     <label class="col-sm-4 control-label">NAMA AYAH</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ayah']; ?>" readonly name="nama_ayah" placeholder="Nama Ayah">
+      <input type="text" class="form-control" value="<?php echo $edit['ayah']; ?>" readonly name="nama_ayah" placeholder="Nama Ayah">
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-4 control-label">NAMA IBU</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ibu']; ?>" readonly name="nama_ibu" placeholder="Nama Ibu">
+      <input type="text" class="form-control" value="<?php echo $edit['ibu']; ?>" readonly name="nama_ibu" placeholder="Nama Ibu">
     </div>
 </div>
 <div class="form-group">

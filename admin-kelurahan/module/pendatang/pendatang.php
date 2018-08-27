@@ -101,7 +101,7 @@ $sql ="SELECT max(id_pendatang) as terakhir from pendatang";
   $lastID = $data['terakhir'];
   $lastNoUrut = substr($lastID, 3, 9);
   $nextNoUrut = $lastNoUrut + 1;
-  $nextID = "IDPEN".sprintf("%03s",$nextNoUrut);
+  $nextID = "ID".sprintf("%03s",$nextNoUrut);
 ?>
 <h3 class="box-title margin text-center">Tambah Data Pendatang</h3>
 <hr/>

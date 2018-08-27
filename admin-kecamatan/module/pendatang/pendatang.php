@@ -30,10 +30,10 @@ default:
 </div><!-- /.input group -->
 </div>
 <div class="col-sm-1">
-<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
+<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
 </div></div>  
 </form>
-	<div class="box box-solid box-primary">
+	<div class="box box-solid box-success">
 		<div class="box-header">
 		<h3 class="btn btn disabled box-title">
 		<i class="glyphicon glyphicon-thumbs-up"></i>
@@ -75,6 +75,8 @@ $Kode = $k['id'];?>
 	
 	<td align="center">
 	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Pindah <?php echo $k['id_pendatang'];?>" href="?module=pendatang&aksi=detail_pendatang&id_pendatang=<?php echo $k['id_pendatang'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
+	<a  class="btn btn-xs btn-info" href="?module=pendatang&aksi=edit&id_pendatang=<?php echo $k['id_pendatang'];?>" alt="Edit Data"><i class="glyphicon glyphicon-pencil"></i></a>
+	<a class="btn btn-xs btn-warning" href="<?php echo $aksi ?>?module=pendatang&aksi=hapus&id_pendatang=<?php echo $k['id_pendatang'];?>"  alt="Delete Data" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA <?php echo $Kode; ?>	?')"> <i class="glyphicon glyphicon-trash"></i></a>
 	</td>
 	<?php
 	}
@@ -99,7 +101,7 @@ $sql ="SELECT max(id_pendatang) as terakhir from pendatang";
   $lastID = $data['terakhir'];
   $lastNoUrut = substr($lastID, 3, 9);
   $nextNoUrut = $lastNoUrut + 1;
-  $nextID = "IDPEN".sprintf("%03s",$nextNoUrut);
+  $nextID = "ID".sprintf("%03s",$nextNoUrut);
 ?>
 <h3 class="box-title margin text-center">Tambah Data Pendatang</h3>
 <hr/>

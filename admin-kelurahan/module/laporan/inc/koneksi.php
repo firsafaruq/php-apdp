@@ -2,5 +2,5 @@
 $koneksi=mysql_connect("localhost","root","")
 or
 die("can't connect to database");
-$db=mysql_select_db("sik",$koneksi);
+$db=mysql_select_db("apdp",$koneksi);
 ?>

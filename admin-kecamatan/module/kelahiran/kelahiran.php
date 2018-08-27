@@ -30,10 +30,10 @@ default:
 </div><!-- /.input group -->
 </div>
 <div class="col-sm-1">
-<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
+<button type="submit"name="submit" onclick="this.form.target='_blank';return true;" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp; Cetak</button>
 </div></div>  
 </form>
-	<div class="box box-solid box-primary">
+	<div class="box box-solid box-success">
 		<div class="box-header">
 		<h3 class="btn btn disabled box-title">
 		<i class="glyphicon glyphicon-thumbs-up"></i>
@@ -77,6 +77,8 @@ $Kode = $k['id'];?>
 	
 	<td align="center">
 	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Pindah <?php echo $k['id_kelahiran'];?>" href="?module=kelahiran&aksi=detail_kelahiran&id_kelahiran=<?php echo $k['id_kelahiran'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
+	<a  class="btn btn-xs btn-info" href="?module=kelahiran&aksi=edit&id_kelahiran=<?php echo $k['id_kelahiran'];?>" alt="Edit Data"><i class="glyphicon glyphicon-pencil"></i></a>
+	<a class="btn btn-xs btn-warning" href="<?php echo $aksi ?>?module=kelahiran&aksi=hapus&id_kelahiran=<?php echo $k['id_kelahiran'];?>"  alt="Delete Data" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA <?php echo $Kode; ?>	?')"> <i class="glyphicon glyphicon-trash"></i></a>
 	</td>
 	<?php
 	}
@@ -91,7 +93,7 @@ $Kode = $k['id'];?>
 <?php 
 break;
  case "tambah": 
-//ID
+ 
 $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
   $hasil = mysql_query($sql);
   $data = mysql_fetch_array($hasil);
@@ -113,8 +115,16 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
 		</div>	
 	<div class="box-body">
 <form class="form-horizontal" action="<?php echo $aksi?>?module=kelahiran&aksi=tambah" role="form" method="post">        
-
-     
+<?php
+$sql6 ="SELECT max(id) as terakhir from kelahiran";
+  $hasil6 = mysql_query($sql6);
+  $data6 = mysql_fetch_array($hasil6);
+  $lastID6 = $data6['terakhir'];
+  $lastNoUrut6 = substr($lastID6, 3, 9);
+  $nextNoUrut6 = $lastNoUrut6 + 1;
+  $nextID6 = "IDL".sprintf("%03s",$nextNoUrut6);
+  $id_himpunan=$nextID6;
+?>
   <div class="form-group">
     <label class="col-sm-4 control-label">ID KELAHIRAN</label>
     <div class="col-sm-5">
@@ -122,15 +132,15 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-4 control-label">NO KK</label>
+    <label class="col-sm-4 control-label">ID WARGA</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" required="required" name="no_kk" placeholder="Masukan No kk ...">
+    <input type="text" class="form-control" required="required" name="id" value="<?php echo $nextID;?>">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-4 control-label">NIK</label>
+    <label class="col-sm-4 control-label">NO KK</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control"  name="nik" placeholder="Masukan NIK...">
+      <input type="text" class="form-control" required="required" name="no_kk" placeholder="Masukan No kk ...">
     </div>
   </div>
   <div class="form-group">
@@ -148,6 +158,7 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
     <input type="radio" name="jk" value="Perempuan">Perempuan
     </label>
   </div>
+  
   <div class="form-group">
                                             <label class="col-sm-4 control-label">TEMPAT DILAHIRKAN</label>
 											<div class="col-sm-5">
@@ -161,6 +172,97 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
                                             </select>
 											</div>
    </div>
+   <div class="form-group">
+    <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
+    <div class="col-sm-5">
+      <textarea rowspan="2" class="form-control" name="tempat_lhr" placeholder="Tempat Lahir"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+     <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
+	 <div class="col-sm-5">
+    <input type="date" class="form-control" placeholder="Masukan tanggal lahir" name="tanggal_lhr">
+	</div>
+  </div>
+   <div class="form-group">
+     <label class="col-sm-4 control-label">PUKUL LAHIR</label>
+	 <div class="col-sm-5">
+	 <input type="time" class="form-control" required="required" value="<?php echo date("hh-mm-ss"); ?>" name="pukul_lahir" placeholder="Pukul Lahir">
+	</div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-4 control-label">KELAHIRAN KE</label>
+    <div class="col-sm-5">
+      <textarea rowspan="2" class="form-control" name="kelahiran_ke"placeholder="Kelahiran ke"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+                                            <label class="col-sm-4 control-label">JENIS KELAHIRAN</label>
+											<div class="col-sm-5">
+                                            <select class="form-control" name="jenis_kelahiran">
+                                                <option>Pilih Jenis Kelahiran</option>
+                                                <option>Tunggal</option>
+                                                <option>Kembar 2</option>
+                                                <option>Kembar 3</option>
+                                                <option>Lainnya</option>
+                                            </select>
+											</div>
+   </div>
+  <div class="form-group">
+                                            <label class="col-sm-4 control-label">PENOLONG KELAHIRAN</label>
+											<div class="col-sm-5">
+                                            <select class="form-control" name="penolong">
+                                                <option>Pilih Penolong</option>
+                                                <option>Dokter</option>
+                                                <option>Bidan</option>
+                                                <option>Dukun Beranak</option>
+                                                <option>Lainnya</option>
+                                            </select>
+											</div>
+   </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">NAMA PENOLONG</label>
+    <div class="col-sm-5">
+      <textarea rowspan="2" class="form-control" name="nama_penolong"placeholder="Nama Penolong"></textarea>
+    </div>
+  </div>
+  
+ 
+  <div class="form-group">
+    <label class="col-sm-4 control-label">BERAT BAYI</label>
+    <div class="col-sm-5">
+      <textarea rowspan="2" class="form-control" name="berat_bayi"placeholder="Berat Bayi"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-4 control-label">PANJANG BAYI</label>
+    <div class="col-sm-5">
+      <textarea rowspan="2" class="form-control" name="panjang_bayi"placeholder="Panjang Bayi"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+                                            <label class="col-sm-4 control-label">GOLONGAN DARAH</label>
+											<div class="col-sm-5">
+                                            <select class="form-control" name="gol_dar">
+                                                <option>Pilih Golongan Darah</option>
+                                                <option>O</option>
+                                                <option>A</option>
+                                                <option>B</option>
+                                                <option>AB</option>
+                                                <option>Lainnya</option> 
+                                            </select>
+                                        </div>
+										</div>
+ <div class="form-group">
+	  <label class="col-sm-4 control-label">KEWARGANEGARAAN</label>
+	  <label class="radio-inline">
+	  <input type="radio" name="kewarganegaraan" value="WNI" checked>WNI
+	  </label>
+	  <label class="radio-inline">
+	  <input type="radio" name="kewarganegaraan" value="WNA">WNA
+		</label>
+  </div>
+  
   <div class="form-group">
                                             <label class="col-sm-4 control-label">AGAMA</label>
 											<div class="col-sm-5">
@@ -175,80 +277,15 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
                                             </select>
 											</div>
    </div>
-    <div class="form-group">
-    <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
-    <div class="col-sm-5">
-      <textarea rowspan="2" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir"></textarea>
-    </div>
-  </div>
+  
   <div class="form-group">
-     <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
-	 <div class="col-sm-5">
-    <input type="date" class="form-control" placeholder="Masukan tanggal lahir" name="tanggal_lahir">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">PUKUL LAHIR</label>
-	 <div class="col-sm-5">
-	 <input type="time" class="form-control" required="required" value="<?php echo date("hh-mm-ss"); ?>" name="pukul_lahir" placeholder="Pukul Lahir">
-	</div>
-  </div>
-  <div class="form-group">
-                                            <label class="col-sm-4 control-label">JENIS KELAHIRAN</label>
-											<div class="col-sm-5">
-                                            <select class="form-control" name="jenis_kelahiran">
-                                                <option>Pilih Jenis Kelahiran</option>
-                                                <option>Tunggal</option>
-                                                <option>Kembar 2</option>
-                                                <option>Kembar 3</option>
-                                                <option>Lainnya</option>
-                                            </select>
-											</div>
-   </div>
-   <div class="form-group">
-    <label class="col-sm-4 control-label">KELAHIRAN KE</label>
-    <div class="col-sm-5">
-      <textarea rowspan="2" class="form-control" name="kelahiran_ke"placeholder="Kelahiran ke"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-                                            <label class="col-sm-4 control-label">PENOLONG KELAHIRAN</label>
-											<div class="col-sm-5">
-                                            <select class="form-control" name="penolong">
-                                                <option>Pilih Penolong</option>
-                                                <option>Dokter</option>
-                                                <option>Bidan</option>
-                                                <option>Dukun Beranak</option>
-                                                <option>Lainnya</option>
-                                            </select>
-											</div>
-   </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA PENOLONG</label>
-    <div class="col-sm-5">
-      <textarea rowspan="2" class="form-control" name="nama_penolong"placeholder="Nama Penolong"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">BERAT BAYI</label>
-    <div class="col-sm-5">
-      <textarea rowspan="2" class="form-control" name="berat_bayi"placeholder="Berat Bayi"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">PANJANG BAYI</label>
-    <div class="col-sm-5">
-      <textarea rowspan="2" class="form-control" name="panjang_bayi"placeholder="Panjang Bayi"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA AYAH</label>
+    <label class="col-sm-4 control-label">AYAH</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="ayah" placeholder="Nama Ayah">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA IBU</label>
+    <label class="col-sm-4 control-label">IBU</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" name="ibu" placeholder="Nama Ibu">
     </div>
@@ -259,7 +296,24 @@ $sql ="SELECT max(id_kelahiran) as terakhir from kelahiran";
       <textarea rowspan="2" class="form-control" name="alamat" placeholder="Alamat"></textarea>
     </div>
   </div>
-     
+  <div class="form-group">
+    <label class="col-sm-4 control-label">DESA</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="desa" placeholder="Desa">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-4 control-label">RT</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="rt" placeholder="RT">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-4 control-label">RW</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="rw" placeholder="RW">
+    </div>
+  </div>
 <div class="form-group">
     <label class="col-sm-4"></label>
     <div class="col-sm-5">

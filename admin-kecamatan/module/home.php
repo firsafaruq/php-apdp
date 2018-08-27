@@ -26,15 +26,15 @@ while ($k = mysql_fetch_array($data)) {
 </div>
 <div class="box-body">
 		<div class="row">
-			<div class="callout callout-success "  style="margin:20px 20px 20px 20px">
+			<div class="callout callout-info "  style="margin:20px 20px 20px 20px">
 				<h4><?php echo "Hai $_SESSION[nama]"; ?> </h4>
 				<p><?php echo "Selamat datang di halaman Administrator Kelurahan Aplikasi Sistem Informasi Kependudukan! "; ?></p>
 			</div>					
-			<div class="callout callout-success "  style="margin:20px 20px 20px 20px">
+			<div class="callout callout-info "  style="margin:20px 20px 20px 20px">
 				<h4><?php echo "Visi Kantor Kecamatan Tawang"; ?> </h4>
 				<p><?php echo "“BERDASARKAN IMAN DAN TAQWA MEWUJUDKAN PELAYANAN PRIMA DI KECAMATAN TAWANG MENUJU MASYARAKAT MAJU DAN SEJAHTERA”"; ?></p>
 			</div>		
-		<div class="callout callout-success "  style="margin:20px 20px 20px 20px">
+		<div class="callout callout-info "  style="margin:20px 20px 20px 20px">
 				<h4><?php echo "Misi Kantor Kecamatan Tawang"; ?> </h4>
 				<p><?php echo "1. Meningkatkan kualitas Sumber Daya Manusia, Aparatur. Meningkatkan Koordinasi dan Pengawasan penyelenggaraan Pemerintah dalam rangka pelayanan 
 				<br/>   	 prima kepada Masyarakat. <br/>

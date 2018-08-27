@@ -81,7 +81,7 @@ while ($data = mysql_fetch_array($tampil)) { ?>
 		  	  Camat Kecamatan Tawang Kota Tasikmalaya
 			 </div> 
 		  
-		              <br> ______H. BUDY RACHMAN, S.Sos., M.SI._____</br>
+		              <br> ______H. BUDY RACHMAN, S.Sos., M.SI._____</br> 
 		  
 <?php
 include "tail.php";

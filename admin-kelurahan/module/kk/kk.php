@@ -75,9 +75,8 @@ $blokir = $tampilkan['blokir'];?>
 	<td><?php echo $tampilkan['alamat']; ?></td>
 	<td><?php echo $tampilkan['status_keluarga']; ?></td>
 	<td align="center">
-	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Kepala Keluarga <?php echo $tampilkan['id'];?>" href="?module=kk&aksi=detail_warga&id=<?php echo $tampilkan['id'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
-	<!--<a class="btn btn-xs btn-danger"data-toggle="tooltip" title="Hapus Data Warga??"href="<?php echo $aksi ?>?module=warga&aksi=hapus&id=<?php echo $tampilkan['id'];?>"  alt="Delete Data" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA <?php echo $Kode; ?>	?')"> <i class="glyphicon glyphicon-trash"></i></a>-->
-	<!--<a class="btn btn-xs btn-info" data-toggle="tooltip" title="Edit Data Warga??"href="?module=warga&aksi=edit&id=<?php echo $tampilkan['id'];?>" alt="Edit Data"><i class="glyphicon glyphicon-pencil"></i></a>-->
+	<a class="btn btn-xs btn-success"data-toggle="tooltip" title="Lihat Data Kepala Keluarga <?php echo $tampilkan['id'];?>" href="?module=kk&aksi=detail_warga2&id=<?php echo $tampilkan['id'];?>"><i class="glyphicon glyphicon-eye-open"></i></a>
+	
 		</td>
 	<?php
 	}
@@ -90,25 +89,39 @@ $blokir = $tampilkan['blokir'];?>
 <!----- ------------------------- END MENAMPILKAN DATA WARGA ------------------------- ----->
 <?php	
 break;
-case "detail_warga" :
-$data=mysql_query("select * from data_warga where id='$_GET[id]'");
-$edit=mysql_fetch_array($data);
+case "detail_warga2" :
 ?>
 <!----- ------------------------- LIHAT DATA KEPALA KELUARGA ------------------------- ----->
-<h3 class="box-title margin text-center">Lihat Data Kepala Keluarga "<?php echo $_GET['id']; ?>"</h3>
-<br/>
-<form class="form-horizontal" action="<?php echo $aksi?>?module=kk&aksi=edit" role="form" method="post">             
 
-<div class="box box-solid box-success">
+<center>
+<h3> Data Warga</h3>
+</center>
+
+<form class="form-horizontal" action="<?php echo $aksi?>?module=kk&aksi=edit" role="form" method="post">             
+<div class="nav-tabs-custom">
+<ul class="nav nav-tabs">
+	<li class="active"><a class="text-red" href="#data" data-toggle="tab"><i class="fa fa-user-md"></i> Data Kepala Keluarga </h3> </a></li>
+	<li><a class="text-red" href="#data1" data-toggle="tab"><i class="fa fa-institution"></i> Data Istri</h3></a></li>
+	<li><a class="text-red" href="#data4" data-toggle="tab"><i class="fa fa-book"></i>  Data Anak</a></li>
+</ul>
+ <!-- <li><a href="javascript:history.back()" class="btn btn-sm btn-primary pull-right"><i class="fa fa-backward"></i> Kembali</a>	 </li> -->
+<div class="tab-content">
+<div class="tab-pane active" id="data">
+<section id="new">
+<div class="box box-solid box-danger">
 <div class="box-header">
 <h3 class="btn btn disabled box-title">
-<i class="fa fa-user-md"></i> Lihat Informasi Data User </h3>
+<i class="fa fa-user-md"></i> Informasi Data Warga </h3>
+<div class="pull-right">
 	<a class="btn btn-default btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-	<i class="fa fa-minus"></i></a>
-		</div>	
+	<i class="fa fa-minus"></i>
+	</a></div>	</div>	
 	<div class="box-body">
- 
-    <div class="form-group">
+<?php 
+$data=mysql_query("select * from data_warga where id='$_GET[id]'");
+$edit=mysql_fetch_array($data);
+?>	
+  <div class="form-group">
     <label class="col-sm-4 control-label">NO</label>
     <div class="col-sm-5">
       <input type="text" class="form-control" readonly name="id" value="<?php echo $edit['id']; ?>" >
@@ -133,106 +146,87 @@ $edit=mysql_fetch_array($data);
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-4 control-label">JENIS KELAMIN</label>
+    <label class="col-sm-4 control-label">Status Keluarga</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['jk']; ?>" readonly name="nama" placeholder="Jenis Kelamin">
+      <input type="text" class="form-control" value="<?php echo $edit['status_keluarga']; ?>" readonly name="nama" placeholder="Masukan Nama Lengkap">
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">TEMPAT LAHIR</label>
+  
+	</div></div></section></div>
+<div class="tab-pane" id="data1">
+<section id="new1">
+<div class="box box-solid box-danger">
+<div class="box-header">
+<h3 class="btn btn disabled box-title">
+<i class="fa fa-institution"></i> Data Istri </h3>
+	<a class="btn btn-default btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+	<i class="fa fa-minus"></i>
+	</a></div>	
+	<div class="box-body">
+<?php 
+// Tampilkan data dari Database
+$a = mysql_query(" SELECT no_kk, nik, nama, status_keluarga FROM data_warga a where status_keluarga='Istri' and  no_kk='no_kk'");
+while ($e = mysql_fetch_array($a)) { ?>
+	
+ <div class="form-group">
+    <label class="col-sm-4 control-label">NO</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['tempat_lhr']; ?>" readonly name="tempat_lhr" placeholder="Tempat Lahir">
+      <input type="text" class="form-control" readonly name="id" value="<?php echo $e['id']; ?>" >
     </div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">TANGGAL LAHIR</label>
-	 <div class="col-sm-5">
-    <input type="date" class="form-control" value="<?php echo $edit['tanggal_lhr']; ?>" placeholder="Masukan tanggal lahir" readonly name="tanggal_lhr">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">KEWARGANEGARAAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['kewarganegaraan']; ?>" placeholder="kewarganegaraan" readonly name="kewarganegaraan">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">AGAMA</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['agama']; ?>" placeholder="Agama" readonly name="agama">
-	</div>
+  </div> 
+    <div class="form-group">
+    <label class="col-sm-4 control-label">NO. KK</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" value="<?php echo $e['no_kk']; ?>" readonly name="no_kk" placeholder="Masukan No KK ...">
+    </div>
   </div>
    <div class="form-group">
-     <label class="col-sm-4 control-label">PENDIDIKAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['pendidikan']; ?>" placeholder="Pendidikan" readonly name="pendidikan">
-	</div>
+    <label class="col-sm-4 control-label">NIK</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" value="<?php echo $e['nik']; ?>" readonly name="nik" placeholder="Masukan NIK ...">
+    </div>
   </div>
    <div class="form-group">
-     <label class="col-sm-4 control-label">PEKERJAAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['pekerjaan']; ?>" placeholder="Pekerjaan" readonly name="pekerjaan">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">STATUS PERNIKAHAN</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['status_nikah']; ?>" placeholder="Status Nikah" readonly name="status_nikah">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">STATUS KELUARGA</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['status_keluarga']; ?>" placeholder="Status Keluarga" readonly name="status_keluarga">
-	</div>
-  </div>
-  <div class="form-group">
-     <label class="col-sm-4 control-label">Golongan Darah</label>
-	 <div class="col-sm-5">
-    <input type="text" class="form-control" value="<?php echo $edit['gol_dar']; ?>" placeholder="Golongan Darah" readonly name="gol_dar">
-	</div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA AYAH</label>
+    <label class="col-sm-4 control-label">Status Keluarga</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ayah']; ?>" readonly name="nama_ayah" placeholder="Nama Ayah">
+      <input type="text" class="form-control" value="<?php echo $e['status_keluarga']; ?>" readonly name="nama" placeholder="Masukan Nama Lengkap">
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">NAMA IBU</label>
+<?php } ?>
+</div></div></section></div>
+
+
+
+<div class="tab-pane" id="data4">
+<section id="new4">
+<div class="box box-solid box-danger">
+<div class="box-header">
+<h3 class="btn btn disabled box-title">
+<i class="fa fa-book"></i> Data Anak </h3>
+	<a class="btn btn-default btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+	<i class="fa fa-minus"></i>
+	</a></div>	
+	<div class="box-body">
+<?php $d=mysql_query("select * from pendatang where  id='$_GET[id]'");
+$f=mysql_fetch_array($d);
+?>
+<div class="form-group">
+    <label class="col-sm-4 control-label">ID Pendatang</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['nama_ibu']; ?>" readonly name="nama_ibu" placeholder="Nama Ibu">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">ALAMAT</label>
+      <input type="text" class="form-control" disabled value="<?php echo $f['id_pendatang']; ?>">
+    </div></div> 
+<div class="form-group">
+    <label class="col-sm-4 control-label">Tanggal Datang </label>
     <div class="col-sm-5">
-      <input rowspan="2" class="form-control" value="<?php echo $edit['alamat']; ?>" readonly name="alamat" placeholder="Alamat">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">DESA</label>
+      <input type="date" class="form-control" disabled value="<?php echo $f['tanggal_datang']; ?>">
+    </div></div>
+	<div class="form-group">
+    <label class="col-sm-4 control-label">Alamat Datang </label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['desa']; ?>" readonly name="desa" placeholder="Desa">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">RT</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['rt']; ?>" readonly name="rt" placeholder="RT">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-4 control-label">RW</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" value="<?php echo $edit['rw']; ?>" readonly name="rw" placeholder="RW">
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-</div>
-</form>
+      <input type="text" class="form-control" disabled value="<?php echo $f['alamat_datang']; ?>">
+    </div></div>
+	
+</div></div></section></div>
 
 <?php	
 break;
